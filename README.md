@@ -36,6 +36,9 @@ npm i -D @types/bcryptjs
 
 npm i next-auth@beta
 
+npm i uuid
+npm i --save-dev @types/uuid
+
 npx prisma init
 
 // neon.tech üzerinden database oluşturduktan sonra .env ve shcema.prisma dosyalarını güncelle
