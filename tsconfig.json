@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "data/tokens.ts"
+    "lib/tokens.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -39,6 +39,8 @@ npm i next-auth@beta
 npm i uuid
 npm i --save-dev @types/uuid
 
+npm install resend
+
 npx prisma init
 
 // neon.tech üzerinden database oluşturduktan sonra .env ve shcema.prisma dosyalarını güncelle
