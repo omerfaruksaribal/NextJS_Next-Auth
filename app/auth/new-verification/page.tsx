@@ -1,7 +1,9 @@
+import { NewVerificationForm } from '@/components/auth/new-verification-form';
+
 const NewVerification = () => {
   return (
     <div>
-      <div>New Verification</div>
+      <NewVerificationForm />
     </div>
   );
 };

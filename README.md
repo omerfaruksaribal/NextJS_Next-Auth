@@ -41,6 +41,8 @@ npm i --save-dev @types/uuid
 
 npm install resend
 
+npm i react-spinners
+
 npx prisma init
 
 // neon.tech üzerinden database oluşturduktan sonra .env ve shcema.prisma dosyalarını güncelle
