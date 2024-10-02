@@ -18,6 +18,10 @@ npx shadcn@latest add form
 
 npx shadcn@latest add input
 
+npx shadcn@latest add dropdown-menu
+
+npx shadcn@latest add avatar
+
 npm i react-icons
 
 npm i -D prisma
