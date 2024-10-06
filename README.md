@@ -22,6 +22,8 @@ npx shadcn@latest add dropdown-menu
 
 npx shadcn@latest add avatar
 
+npx shadcn@latest add badge
+
 npm i react-icons
 
 npm i -D prisma
