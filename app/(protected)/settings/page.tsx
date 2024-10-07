@@ -1,20 +1,31 @@
 'use client';
 
-import { logOut } from '@/actions/logout';
-import { useCurrentUser } from '@/hooks/use-current-user';
+import { settings } from '@/actions/settings';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useTransition } from 'react';
 
 const SettingsPage = () => {
-  const user = useCurrentUser();
+  const [usePending, startTransition] = useTransition();
 
   const onClick = () => {
-    logOut();
+    startTransition(() => {
+      settings({
+        name: 'Ömerfaruk Sarıbal',
+      });
+    });
   };
   return (
-    <div className="bg-white p-10 rounded-xl">
-      <button type="submit" onClick={onClick}>
-        Sign Out
-      </button>
-    </div>
+    <Card className="w-[600px]">
+      <CardHeader>
+        <p className="text-2xl font-semibold text-center">⚙️ Settings</p>
+      </CardHeader>
+      <CardContent>
+        <Button disabled={usePending} onClick={onClick}>
+          Update ME
+        </Button>
+      </CardContent>
+    </Card>
   );
 };
 
