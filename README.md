@@ -24,6 +24,8 @@ npx shadcn@latest add avatar
 
 npx shadcn@latest add badge
 
+npx shadcn@latest add sonner
+
 npm i react-icons
 
 npm i -D prisma
