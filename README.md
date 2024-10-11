@@ -1,5 +1,7 @@
 ## Getting Started
 
+Eğer bir hatayla karşılaşıyorsan muhtemelen ya await'i unutmuşsundur ya da bir şeyleri return etmeyi unutmuşsundur.
+
 First, run the development server:
 
 ```bash
@@ -25,6 +27,10 @@ npx shadcn@latest add avatar
 npx shadcn@latest add badge
 
 npx shadcn@latest add sonner
+
+npx shadcn@latest add switch
+
+npx shadcn@latest add select
 
 npm i react-icons
 

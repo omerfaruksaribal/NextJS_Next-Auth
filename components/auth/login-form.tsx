@@ -1,7 +1,7 @@
 'use client';
 
 import * as z from 'zod';
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
@@ -34,9 +34,32 @@ export const LoginForm = () => {
       : '';
 
   const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(5 * 60);
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (showTwoFactor && timeLeft > 0) {
+      const timerId = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timerId);
+    }
+  }, [showTwoFactor, timeLeft]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      setError('2FA code has expired. Please request a new code.');
+    }
+  }, [timeLeft]);
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -63,6 +86,7 @@ export const LoginForm = () => {
           }
           if (data?.twoFactor) {
             setShowTwoFactor(true);
+            setTimeLeft(5 * 60);
           }
         })
         .catch((err) => {
@@ -83,23 +107,28 @@ export const LoginForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             {showTwoFactor && (
-              <FormField
-                control={form.control}
-                name="code"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>2FA Code</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="123456"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <>
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>2FA Code</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="123456"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <p className="flex text-sm text-gray-600 items-center justify-center">
+                  Time remaining: {formatTime(timeLeft)}
+                </p>
+              </>
             )}
             {!showTwoFactor && (
               <>
@@ -152,7 +181,11 @@ export const LoginForm = () => {
           </div>
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isPending || timeLeft === 0}
+          >
             {showTwoFactor ? 'Confirm' : 'Login'}
           </Button>
         </form>
