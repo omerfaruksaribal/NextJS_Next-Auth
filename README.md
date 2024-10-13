@@ -96,3 +96,13 @@ AUTH_SECRET="secret", secret için 'openssl rand -hex 32' bu kodu çalıştır
 web siteleri
 neon.tech
 https://clerk.com/docs/references/nextjs/clerk-middleware
+
+- Deploy ettikten sonra:
+
+* package.json dosyasındaki scripts'in içine
+  "postinstall": "prisma generate"
+  satırını ekle
+* domain'i kopyalayıp github OAuth sayfasına homepage ve authorization yerine gerçek domaini yapıştır. (key'lerin güncellenmesine gerek yok.)
+* Google için; console.google'a gidip credentials kısmından hem url1 hem de authorized url1'i değiştir. Sonrasında OAuth consent screen -> edit app'e gidip authorized domain kısmının otomatik olarak gelmesi gerekir eğer gelmediyse oraya domaini yazmak yeter.
+* .env dosyasındaki url yerine domain'i yapıştır
+* mail.ts üzerinden gönderici mailini domaine göre şekillendir. Eğer domain satın aldıysan resend üzerinden domain ayarları yapman gerekiyor.
